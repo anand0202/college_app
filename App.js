@@ -9,7 +9,8 @@ import ChatBotScreen from './screens/ChatBotScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import SplashScreen from 'react-native-splash-screen';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
+import LoginScreen, {SocialButton} from 'react-native-login-screen';
 
 // create a component
 // For splash screen, there are many changes done inside the android folder.
@@ -77,12 +78,22 @@ function MyTabs() {
 }
 
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useEffect(() => {
     SplashScreen.hide();
   }, []);
+
   return (
     <NavigationContainer>
-      <MyTabs />
+      {!isLoggedIn && (
+        <LoginScreen
+          onLoginPress={() => {
+            setIsLoggedIn(true);
+          }}
+        />
+      )}
+      {isLoggedIn && <MyTabs />}
     </NavigationContainer>
   );
 };
