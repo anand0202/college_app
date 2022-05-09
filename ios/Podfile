@@ -19,6 +19,8 @@ target 'college_app' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
   target 'college_appTests' do
     inherit! :complete
     # Pods for testing

@@ -1,6 +1,5 @@
 //import liraries
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,17 +8,18 @@ import OptedScreen from './screens/OptedScreen';
 import ChatBotScreen from './screens/ChatBotScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import SplashScreen from 'react-native-splash-screen';
+import {useEffect} from 'react';
 
 // create a component
-
+// For splash screen, there are many changes done inside the android folder.
+//  To change the image, Android > App > Src > main > res > inside all minimap folders, change image.
+// Make sure to maintain the name "splash". If it is to be changed, do not use capital letter/s. And change it in required android folders.
 const Tab = createMaterialBottomTabNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      activeColor="#fff"
-      labelStyle={{fontSize: 18}}>
+    <Tab.Navigator initialRouteName="Home" activeColor="#fff">
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -77,6 +77,9 @@ function MyTabs() {
 }
 
 const App = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   return (
     <NavigationContainer>
       <MyTabs />
