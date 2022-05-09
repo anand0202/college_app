@@ -5,17 +5,13 @@ import {
   Box,
   CheckIcon,
   CircleIcon,
-  Icon,
   IconButton,
   NativeBaseProvider,
 } from 'native-base';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {
-  MaterialCommunityIcons,
-  AntDesign,
-  Entypo,
-} from 'react-native-vector-icons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {IconRn} from '@rneui/themed';
 
 // create a component
 function HomeScreen() {
@@ -92,7 +88,7 @@ function MyTabs() {
   return (
     <Tab.Navigator
       // initialRouteName="Home"
-      // activeColor="#fff"
+      activeColor="#fff"
       labelStyle={{fontSize: 18}}>
       <Tab.Screen
         name="Home"
@@ -100,7 +96,8 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
-            <CircleIcon size="4" mt="0.5" color="white" />
+            <Icon name="home" size={25} color="white" />
+            // <IconRn name="home" />
           ),
         }}
       />
@@ -110,7 +107,7 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Opted',
           tabBarIcon: ({color, size}) => (
-            <CheckIcon size="5" mt="0.5" color="white" />
+            <Icon name="school" size={25} color="white" />
           ),
         }}
       />
@@ -120,7 +117,7 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Chatbot',
           tabBarIcon: ({color, size}) => (
-            <CheckIcon size="5" mt="0.5" color="white" />
+            <Icon name="robot" size={25} color="white" />
           ),
         }}
       />
@@ -131,7 +128,7 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color, size}) => (
-            <CheckIcon size="5" mt="0.5" color="white" />
+            <Icon name="account" size={25} color="white" />
           ),
         }}
       />
@@ -141,7 +138,7 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Setting',
           tabBarIcon: ({color, size}) => (
-            <CheckIcon size="5" mt="0.5" color="white" />
+            <Icon name="tools" size={25} color="white" />
           ),
         }}
       />
