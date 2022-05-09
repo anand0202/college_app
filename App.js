@@ -1,93 +1,23 @@
 //import liraries
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {
-  Box,
-  CheckIcon,
-  CircleIcon,
-  IconButton,
-  NativeBaseProvider,
-} from 'native-base';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {IconRn} from '@rneui/themed';
+import HomeScreen from './screens/HomeScreen';
+import OptedScreen from './screens/OptedScreen';
+import ChatBotScreen from './screens/ChatBotScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import SettingsScreen from './screens/SettingsScreen';
 
 // create a component
-function HomeScreen() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-      }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
-function ChatbotScreen() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-      }}>
-      <Text>Chatbot!</Text>
-    </View>
-  );
-}
-function OptedScreen() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-      }}>
-      <Text>Opted!</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-      }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-
-function ProfileScreen() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-      }}>
-      <Text>Profile</Text>
-    </View>
-  );
-}
 
 const Tab = createMaterialBottomTabNavigator();
 
 function MyTabs() {
   return (
     <Tab.Navigator
-      // initialRouteName="Home"
+      initialRouteName="Home"
       activeColor="#fff"
       labelStyle={{fontSize: 18}}>
       <Tab.Screen
@@ -113,7 +43,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="ChatBot"
-        component={ChatbotScreen}
+        component={ChatBotScreen}
         options={{
           tabBarLabel: 'Chatbot',
           tabBarIcon: ({color, size}) => (
@@ -148,23 +78,10 @@ function MyTabs() {
 
 const App = () => {
   return (
-    <NativeBaseProvider>
-      <NavigationContainer>
-        <MyTabs />
-      </NavigationContainer>
-    </NativeBaseProvider>
+    <NavigationContainer>
+      <MyTabs />
+    </NavigationContainer>
   );
 };
 
-// define your styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2c3e50',
-  },
-});
-
-//make this component available to the app
 export default App;
