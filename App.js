@@ -1,4 +1,3 @@
-//import liraries
 import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
@@ -10,7 +9,9 @@ import ProfileScreen from './screens/ProfileScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import SplashScreen from 'react-native-splash-screen';
 import {useEffect, useState} from 'react';
-import LoginScreen, {SocialButton} from 'react-native-login-screen';
+import {NativeBaseProvider} from 'native-base';
+import SignUpScreen from './screens/SignUpScreen';
+import LoginScreen from './screens/LoginScreen';
 
 // create a component
 // For splash screen, there are many changes done inside the android folder.
@@ -79,22 +80,25 @@ function MyTabs() {
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [hasAccount, setHasAccount] = useState(true);
 
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
   return (
-    <NavigationContainer>
-      {!isLoggedIn && (
-        <LoginScreen
-          onLoginPress={() => {
-            setIsLoggedIn(true);
-          }}
-        />
-      )}
-      {isLoggedIn && <MyTabs />}
-    </NavigationContainer>
+    <NativeBaseProvider>
+      <NavigationContainer>
+        {!isLoggedIn && hasAccount && (
+          <LoginScreen
+            setIsLoggedIn={setIsLoggedIn}
+            setHasAccount={setHasAccount}
+          />
+        )}
+        {!hasAccount && <SignUpScreen setHasAccount={setHasAccount} />}
+        {isLoggedIn && hasAccount && <MyTabs />}
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 };
 
