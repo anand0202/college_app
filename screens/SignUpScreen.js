@@ -14,25 +14,59 @@ import {Text} from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 
-// create a component
+function signUpStudent(values) {
+  var myHeaders = new Headers();
+  myHeaders.append(
+    'Authorization',
+    'Bearer 85d3005a-94d5-40ee-a657-c54be370aa74',
+  );
+  myHeaders.append('Content-Type', 'application/json');
+
+  console.log('Raw: ', raw);
+  var raw = JSON.stringify({
+    firstName: values.firstName,
+    lastName: values.lastName,
+    email: values.email,
+    password: values.password,
+  });
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow',
+  };
+
+  fetch(
+    'https://c6a0-2405-201-200a-3110-14c3-8def-f4a3-790c.in.ngrok.io/student/signup/',
+    requestOptions,
+  )
+    .then(res => res.json())
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+}
+
 const SignUpScreen = ({setHasAccount}) => {
-  const handleSubmit = () => {
+  const handleSubmit = values => {
     setHasAccount(true);
+    signUpStudent(values);
   };
   return (
     <Formik
       initialValues={{
-        name: '',
         email: '',
         password: '',
+        firstName: '',
+        lastName: '',
       }}
       validationSchema={yup.object().shape({
-        name: yup.string().required('Please, provide your name!'),
+        firstName: yup.string().required(),
+        lastName: yup.string().required(),
         email: yup.string().email().required(),
         password: yup
           .string()
           .min(4)
-          .max(14, 'Password should not excced 10 chars.')
+          .max(14, 'Password should not excced 14 chars.')
           .required(),
       })}>
       {({values, handleChange, errors, setFieldTouched, touched, isValid}) => (
@@ -62,22 +96,43 @@ const SignUpScreen = ({setHasAccount}) => {
                 <FormControl color="white">
                   <FormControl.Label color="white">
                     {' '}
-                    <Text style={{color: 'white'}}>Name</Text>
+                    <Text style={{color: 'white'}}>First Name</Text>
                   </FormControl.Label>
                   <Input
                     bgColor={'white'}
                     color={'black'}
                     placeholder={'Enter Name Here'}
-                    value={values.name}
-                    onChangeText={handleChange('name')}
-                    onBlur={() => setFieldTouched('name')}
+                    value={values.firstName}
+                    onChangeText={handleChange('firstName')}
+                    onBlur={() => setFieldTouched('firstName')}
                   />
-                  {touched.name && errors.name && (
+                  {touched.firstName && errors.firstName && (
                     <Text style={{fontSize: 12, color: '#FFf'}}>
-                      {errors.name}
+                      {errors.firstName}
                     </Text>
                   )}
                 </FormControl>
+
+                <FormControl color="white">
+                  <FormControl.Label color="white">
+                    {' '}
+                    <Text style={{color: 'white'}}>Last Name</Text>
+                  </FormControl.Label>
+                  <Input
+                    bgColor={'white'}
+                    color={'black'}
+                    placeholder={'Enter Name Here'}
+                    value={values.lastName}
+                    onChangeText={handleChange('lastName')}
+                    onBlur={() => setFieldTouched('lastName')}
+                  />
+                  {touched.lastName && errors.lastName && (
+                    <Text style={{fontSize: 12, color: '#FFf'}}>
+                      {errors.lastName}
+                    </Text>
+                  )}
+                </FormControl>
+
                 <FormControl color="white">
                   <FormControl.Label>
                     {' '}
@@ -117,28 +172,11 @@ const SignUpScreen = ({setHasAccount}) => {
                     </Text>
                   )}
                 </FormControl>
-                <FormControl>
-                  <FormControl.Label>
-                    {' '}
-                    <Text style={{color: 'white'}}>Confirm Password</Text>
-                  </FormControl.Label>
-                  <Input
-                    type="password"
-                    bgColor={'white'}
-                    color={'black'}
-                    placeholder={'Enter Password Here'}
-                    value={values.password}
-                    onChangeText={handleChange('password')}
-                    onBlur={() => setFieldTouched('password')}
-                    secureTextEntry={true}
-                  />
-                </FormControl>
-                {touched.password && errors.password && (
-                  <Text style={{fontSize: 12, color: '#FFf'}}>
-                    {errors.password}
-                  </Text>
-                )}
-                <Button mt="2" bg="white" onPress={handleSubmit}>
+                <Button
+                  mt="2"
+                  bg="white"
+                  type="submit"
+                  onPress={() => handleSubmit(values)}>
                   <Text style={{color: '#009be5'}}>Sign up</Text>
                 </Button>
               </VStack>

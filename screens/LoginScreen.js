@@ -14,21 +14,49 @@ import {
 import React from 'react';
 import * as yup from 'yup';
 import {Formik} from 'formik';
-import {useState} from 'react';
+
+function signInStudent(values, setIsLoggedIn) {
+  var myHeaders = new Headers();
+  myHeaders.append(
+    'Authorization',
+    'Bearer 82dbc427-8ece-4575-9148-9b39eb64aa2b',
+  );
+  myHeaders.append('Content-Type', 'application/json');
+
+  var raw = JSON.stringify({
+    email: values.email,
+    password: values.password,
+  });
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow',
+  };
+
+  fetch(
+    'https://c6a0-2405-201-200a-3110-14c3-8def-f4a3-790c.in.ngrok.io/student/signin/',
+    requestOptions,
+  )
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .then(setIsLoggedIn(true))
+    .catch(error => console.log('error', error));
+}
 
 // create a component
 export default function LoginScreen({setIsLoggedIn, setHasAccount}) {
-  const handleSignIn = () => {
-    setIsLoggedIn(true);
-  };
   const handleSignUp = () => {
     setHasAccount(false);
   };
-  const [valuesData, setValuesData] = useState({});
+  const handleSubmit = values => {
+    // setIsLoggedIn(true);
+    signInStudent(values, setIsLoggedIn);
+  };
   return (
     <Formik
       initialValues={{
-        name: '',
         email: '',
         password: '',
       }}
@@ -107,7 +135,10 @@ export default function LoginScreen({setIsLoggedIn, setHasAccount}) {
                     <Text style={{color: 'white'}}>Forget Password?</Text>
                   </Link>
                 </FormControl>
-                <Button mt="2" bg={'white'} onPress={handleSignIn}>
+                <Button
+                  mt="2"
+                  bg={'white'}
+                  onPress={() => handleSubmit(values)}>
                   <Text style={{color: '#009be5'}}>Sign in</Text>
                 </Button>
                 <HStack mt="6" justifyContent="center">
@@ -133,5 +164,3 @@ export default function LoginScreen({setIsLoggedIn, setHasAccount}) {
     </Formik>
   );
 }
-
-//make this component available to the app
